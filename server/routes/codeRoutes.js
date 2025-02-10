@@ -3,7 +3,8 @@ import {
     compile,
     // stop
 } from "../controllers/codeController.js"
-const router = express()
+
+const router = express.Router()
 
 router.post('/compile', compile);
 // router.post('/stop', stop)
