@@ -103,7 +103,7 @@ const inviteUser = (setShowModal) => {
             <div className="fixed inset-0 backdrop-blur-xs flex justify-center items-center">
                 {createRoom && <div className="bg-[#f6f6f6] text-black p-6 rounded-sm flex flex-col justify-center items-center gap-7 w-92 relative">
                     <h2 className="text-center text-2xl font-semibold">Please Wait...</h2>
-                    <Loading />
+                    <Loading fullHeight={false} />
                     <div>Generating your link</div>
                 </div>}
 

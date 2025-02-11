@@ -115,9 +115,9 @@ const Home = () => {
             <button
               onClick={handleInvite}
               disabled={compiling}
-              className="px-4 py-2 rounded-lg bg-[#EC971F] cursor-pointer text-white disabled:bg-gray-500 flex gap-2 items-center"
+              className="px-4 py-2 rounded-lg bg-[#BC9357] cursor-pointer text-white disabled:bg-gray-500 flex gap-2 items-center"
             >
-              Create a room
+              Create Room
             </button>
 
             <button
@@ -132,7 +132,7 @@ const Home = () => {
               <div className='rounded-full flex px-2 cursor-pointer items-center '>
                 {userData.picture === 'NA' ?
                   <img src={userData.picture} className='h-10 rounded-full' /> :
-                  <FaUser className='text-2xl' />
+                  <div className='bg-[#125792] rounded-full px-[14px] py-[6px] text-xl'>{userData.name[0]}</div>
                 }
               </div>}
           </div>

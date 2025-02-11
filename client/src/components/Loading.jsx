@@ -1,9 +1,9 @@
 import React from 'react'
 import './Loading.css'
 
-const Loading = () => {
+const Loading = ({fullHeight = true}) => {
   return (
-    <div className='flex h-full w-full justify-center items-center'>
+    <div className={`${fullHeight ? "min-h-screen" : "h-full" } flex w-full justify-center items-center`}>
       <div className="loader"></div>
     </div>
   )

@@ -6,7 +6,7 @@ import axios from 'axios';
 
 import { FaPlay, FaStop, FaMousePointer } from "react-icons/fa";
 import { LuDownload } from "react-icons/lu";
-import { IoIosWarning } from "react-icons/io";
+import { IoIosWarning, IoMdExit } from "react-icons/io";
 
 const SOCKET_SERVER = import.meta.env.VITE_BACKEND_URL;
 const Invite = () => {
@@ -23,10 +23,8 @@ const Invite = () => {
   const [username, setUsername] = useState(`User-${Math.floor(Math.random() * 1000)}`)
 
   useEffect(() => {
-    // Connect to the Socket.io server
     socketRef.current = io(SOCKET_SERVER);
 
-    // Check if room exists
     axios.get(`${SOCKET_SERVER}/room/check/${roomId}`)
       .then(response => {
         if (!response.data.exists) {
@@ -39,10 +37,8 @@ const Invite = () => {
         navigate('/');
       });
 
-    // Join room
     socketRef.current.emit('joinRoom', { roomId, username });
 
-    // Listen for code updates
     socketRef.current.on('codeUpdate', (newCode) => {
       setCode(newCode);
     });
@@ -149,6 +145,13 @@ const Invite = () => {
             >
               <LuDownload />
             </button>
+
+            <button
+              onClick={()=>navigate('/')}
+              className="px-4 py-2 rounded-lg bg-red-600 text-xl cursor-pointer text-white"
+            >
+              <IoMdExit className='text-2xl rotate-180' />
+            </button>
           </div>
         </div>
 
@@ -184,7 +187,6 @@ const Invite = () => {
 
 export default Invite;
 
-// Helper functions
 const getDefaultCode = (lang) => {
   const templates = {
     cpp: `// Made by Bhavishya Garg (https://linkedin.com/in/bhavishya2601)\n#include <iostream>\nusing namespace std;\n\nint main() {\n  cout << "Hello, World!" << endl;\n  return 0;\n}`,

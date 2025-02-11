@@ -9,8 +9,10 @@ const Error = () => {
   },[])
   
   return (
-    <div>
-      404
+    <div className='text-5xl font-semibold bg-black text-white min-h-screen flex justify-center items-center'>
+      <div className='font-manrope'>
+        404 - Page not Found
+      </div>
     </div>
   )
 }
