@@ -17,7 +17,7 @@ const App = () => {
         <Suspense fallback={<Loading />}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/invite/:inviteId" element={<Invite />} />
+            <Route path="/invite/:roomId" element={<Invite />} />
             <Route path="*" element={<Error />} />
           </Routes>
         </Suspense>

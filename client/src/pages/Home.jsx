@@ -4,21 +4,13 @@ import axios from 'axios';
 import { useUser } from '../context/userContext';
 
 import { LuDownload } from "react-icons/lu";
-import { FaUserPlus } from "react-icons/fa6";
 import { IoIosWarning } from "react-icons/io";
 import { FaPlay, FaStop, FaUser } from "react-icons/fa";
 
 import Popup from '../components/Popup';
 
 const Home = () => {
-  const [code, setCode] = useState(`// Made by Bhavishya Garg (https://linkedin.com/in/bhavishya2601)
-#include <iostream>
-using namespace std;
-
-int main() {
-  cout << "Hello, World!" << endl;
-  return 0;
-}`);
+  const [code, setCode] = useState(getDefaultCode('cpp'));
   const [output, setOutput] = useState('');
   const [compiling, setCompiling] = useState(false);
   const [language, setLanguage] = useState('cpp');
@@ -32,39 +24,8 @@ int main() {
 
   const handleLanguageChange = (e) => {
     const selectedLanguage = e.target.value;
+    setCode(getDefaultCode(e.target.value));
     setLanguage(selectedLanguage);
-
-
-    if (selectedLanguage === 'cpp') {
-      setCode(`// Made by Bhavishya Garg (https://linkedin.com/in/bhavishya2601)
-#include <iostream>
-using namespace std;
-
-int main() {
-  cout << "Hello, World!" << endl;
-  return 0;
-}
-`);
-    } else if (selectedLanguage === 'c') {
-      setCode(`// Made by Bhavishya Garg (https://linkedin.com/in/bhavishya2601)
-#include <stdio.h>
-
-int main() {
-  printf("Hello, World!\\n");
-  return 0;
-}`);
-    } else if (selectedLanguage === 'java') {
-      setCode(`// Made by Bhavishya Garg (https://linkedin.com/in/bhavishya2601)
-public class Main {
-  public static void main(String[] args) {
-    System.out.println("Hello, World!");
-  }
-}`);
-    } else if (selectedLanguage === 'python') {
-      setCode(`# Made by Bhavishya Garg (https://linkedin.com/in/bhavishya2601)
-print("Hello, World!")`);
-    }
-
     setOutput('');
   };
 
@@ -156,7 +117,7 @@ print("Hello, World!")`);
               disabled={compiling}
               className="px-4 py-2 rounded-lg bg-[#EC971F] cursor-pointer text-white disabled:bg-gray-500 flex gap-2 items-center"
             >
-              <FaUserPlus /> Invite
+              Create a room
             </button>
 
             <button
@@ -169,10 +130,10 @@ print("Hello, World!")`);
 
             {Object.entries(userData).length !== 0 &&
               <div className='rounded-full flex px-2 cursor-pointer items-center '>
-                {userData.picture ? 
-                <img src={userData.picture} alt={userData.name} className='h-10 rounded-full' /> :
-                <FaUser className='text-2xl' />
-              }
+                {userData.picture === 'NA' ?
+                  <img src={userData.picture} className='h-10 rounded-full' /> :
+                  <FaUser className='text-2xl' />
+                }
               </div>}
           </div>
         </div>
@@ -196,3 +157,13 @@ print("Hello, World!")`);
 };
 
 export default Home;
+
+const getDefaultCode = (lang) => {
+  const templates = {
+    cpp: `// Made by Bhavishya Garg (https://linkedin.com/in/bhavishya2601)\n#include <iostream>\nusing namespace std;\n\nint main() {\n  cout << "Hello, World!" << endl;\n  return 0;\n}`,
+    c: `// Made by Bhavishya Garg (https://linkedin.com/in/bhavishya2601)\n#include <stdio.h>\n\nint main() {\n  printf("Hello, World!\\n");\n  return 0;\n}`,
+    java: `// Made by Bhavishya Garg (https://linkedin.com/in/bhavishya2601)\npublic class Main {\n  public static void main(String[] args) {\n    System.out.println("Hello, World!");\n  }\n}`,
+    python: `# Made by Bhavishya Garg (https://linkedin.com/in/bhavishya2601)\nprint("Hello, World!")`
+  };
+  return templates[lang] || '// Start coding...';
+};

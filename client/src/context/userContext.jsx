@@ -17,7 +17,6 @@ const UserProvider = ({children}) => {
             const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/checkUser`,{
                 withCredentials: true
             })
-            console.log(response.data)
             setUserData(response.data.user)
         } catch (err){
             console.log('Error checking user status')
