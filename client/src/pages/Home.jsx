@@ -115,7 +115,7 @@ const Home = () => {
             <button
               onClick={handleInvite}
               disabled={compiling}
-              className="px-4 py-2 rounded-lg bg-[#BC9357] cursor-pointer text-white disabled:bg-gray-500 flex gap-2 items-center"
+              className="px-4 py-2 rounded-lg bg-[#df8500] cursor-pointer text-white disabled:bg-gray-500 flex gap-2 items-center"
             >
               Create Room
             </button>

@@ -29,18 +29,18 @@ const googleLogin = (setShowModal) => {
     };
 
     return (
-        <div>
+        <div className='font-manrope'>
             <div className="fixed inset-0 backdrop-blur-xs flex justify-center items-center">
-                <div className="bg-[#f6f6f6] text-black p-6 rounded-sm flex flex-col justify-center items-center gap-7 w-92 relative">
+                <div className="bg-gradient-to-r from-[#cdd4cc] to-[#f2f4f2] text-black p-6 rounded-lg flex flex-col justify-center items-center gap-7 w-92 shadow-lg">
                     <h2 className="text-center text-2xl font-semibold">Log in to Continue</h2>
-                    <div className="text-center border p-2 px-4 flex gap-3 items-center cursor-pointer" onClick={handleGoogleLogin}>
+                    <div className="text-center border p-2 px-4 flex gap-3 items-center cursor-pointer hover:bg-white transition-all duration-500" onClick={handleGoogleLogin}>
                         <div><img src={google} alt="" className='h-5' /></div>
                         <div className='text-lg font-semibold'>Continue With Google</div>
                     </div>
                     <div className="flex justify-center">
                         <button
-                            onClick={handleCloseModal}
-                            className="text-2xl cursor-pointer absolute top-2 right-2 "
+                            onClick={() => setShowModal(false)}
+                            className="text-5xl text-white cursor-pointer absolute top-2 right-2 "
                         >
                             <IoMdClose />
                         </button>
@@ -52,7 +52,7 @@ const googleLogin = (setShowModal) => {
 }
 
 const inviteUser = (setShowModal) => {
-    const {userData} = useUser();
+    const { userData } = useUser();
     const navigate = useNavigate()
     const [createRoom, setCreateRoom] = useState(false)
     const [joinRoom, setJoinRoom] = useState(false)
@@ -99,26 +99,34 @@ const inviteUser = (setShowModal) => {
     }
 
     return (
-        <div>
+        <div className='font-manrope'>
             <div className="fixed inset-0 backdrop-blur-xs flex justify-center items-center">
-                {createRoom && <div className="bg-[#f6f6f6] text-black p-6 rounded-sm flex flex-col justify-center items-center gap-7 w-92 relative">
+                {createRoom && <div className="bg-gradient-to-r from-[#cdd4cc] to-[#f2f4f2] text-black p-6 rounded-sm flex flex-col justify-center items-center gap-7 w-92 relative">
                     <h2 className="text-center text-2xl font-semibold">Please Wait...</h2>
                     <Loading fullHeight={false} />
                     <div>Generating your link</div>
                 </div>}
 
-                {joinRoom && <div className="bg-[#f6f6f6] text-black p-6 rounded-sm flex flex-col justify-center items-center gap-7 w-92 relative">
+                {joinRoom && <div className="bg-gradient-to-r from-[#cdd4cc] to-[#f2f4f2] text-black p-6 rounded-sm flex flex-col justify-center items-center gap-7 w-92 relative">
                     <h2 className="text-center text-2xl font-semibold">Enter the code</h2>
-                    <input type="text" 
-                    className="p-2 border border-black rounded-md w-60 text-center"
-                    value={joinRoomCode}
-                    onChange={(e) => setJoinRoomCode(e.target.value)}  />
-                    <div className="bg-red-500 rounded-md py-2 px-4 cursor-pointer" onClick={joinTheRoom}>Join Room</div>
+                    <div className='flex flex-col gap-4 justify-center items-center'>
+
+                        <input type="text"
+                            className="p-2 border border-black rounded-md w-60"
+                            value={joinRoomCode}
+                            onChange={(e) => setJoinRoomCode(e.target.value)} />
+                        <div className="bg-[#4a4e4d] text-white rounded-md py-2 px-4 cursor-pointer self-center" onClick={joinTheRoom}>
+                            Join Room
+                        </div>
+                    </div>
                 </div>}
 
-                {!createRoom && !joinRoom && <div className="bg-[#f6f6f6] text-xl text-black p-6 rounded-sm flex justify-evenly items-center gap-7 w-[500px] relative h-40">
-                    <div className='bg-red-500 rounded-md py-8 px-8 cursor-pointer' onClick={createRoomFunc}>Create a room</div>
-                    <div className='bg-red-500 rounded-md py-8 px-8 cursor-pointer' onClick={()=>setJoinRoom(true)}>Join a room</div>
+                {!createRoom && !joinRoom && <div className='bg-gradient-to-r from-[#cdd4cc] to-[#f2f4f2] w-[500px] relative flex flex-col justify-center gap-6 px-4 py-6 rounded-lg '>
+                    <div className='text-center text-black text-3xl '>Choose a Option</div>
+                    <div className="text-xl text-black flex gap-7">
+                        <div className='bg-[#4a4e4d] text-white rounded-md py-5 px-8 cursor-pointer w-1/2 text-center' onClick={createRoomFunc}>Create room</div>
+                        <div className='bg-[#4a4e4d] text-white rounded-md py-5 px-8 cursor-pointer w-1/2 text-center' onClick={() => setJoinRoom(true)}>Join a room</div>
+                    </div>
                 </div>}
 
                 <div className="flex justify-center">

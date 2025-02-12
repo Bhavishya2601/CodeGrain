@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import MonacoEditor from '@monaco-editor/react';
 import io from 'socket.io-client';
 import axios from 'axios';
+import { useUser } from '../context/userContext';
 
 import { FaPlay, FaStop, FaMousePointer } from "react-icons/fa";
 import { LuDownload } from "react-icons/lu";
@@ -13,6 +14,7 @@ const Invite = () => {
   const { roomId } = useParams();
   const navigate = useNavigate();
   const socketRef = useRef(null);
+  const {userData} = useUser();
 
   const [code, setCode] = useState(getDefaultCode('cpp'));
   const [output, setOutput] = useState('');
@@ -20,7 +22,8 @@ const Invite = () => {
   const [language, setLanguage] = useState('cpp');
   const processRef = useRef(null);
   const [mousePositions, setMousePositions] = useState({})
-  const [username, setUsername] = useState(`User-${Math.floor(Math.random() * 1000)}`)
+  const [username, setUsername] = useState(userData.name)
+  const [userColor, setUserColor] = useState({})
 
   useEffect(() => {
     socketRef.current = io(SOCKET_SERVER);
@@ -45,6 +48,13 @@ const Invite = () => {
 
     socketRef.current.on('mouseUpdate', ({ x, y, username, socketId }) => {
       setMousePositions((prev) => ({ ...prev, [socketId]: { x, y, username } }))
+
+      setUserColor(prevColor => {
+        if (!prevColor[socketId]){
+          return {...prevColor, [socketId]: generateRandomColor()}
+        }
+        return prevColor
+      })
     })
 
     return () => {
@@ -99,6 +109,14 @@ const Invite = () => {
     link.click();
     URL.revokeObjectURL(link.href);
   };
+
+  const generateRandomColor = () => {
+    const randomNumber = Math.floor(Math.random() * 0x202020)
+    const hexaColor = `#${randomNumber.toString(16).padStart(6, '0')}`
+    return hexaColor
+  }
+
+  console.log(generateRandomColor())
 
   return (
     <div className='min-h-screen bg-[#1E1E1E] text-white' onMouseMove={handleMouseMove}>
@@ -168,8 +186,8 @@ const Invite = () => {
             className="absolute flex"
             style={{ left: x + 10, top: y + 10 }}
           >
-            <FaMousePointer className='text-blue-500' />
-            <div className='text-blue-500 text-sm'>{username}</div>
+            <FaMousePointer style={{color: userColor[socketId]}} />
+            <div className='text-sm' style={{color: userColor[socketId]}}>{username}</div>
           </div>
         ))}
 
